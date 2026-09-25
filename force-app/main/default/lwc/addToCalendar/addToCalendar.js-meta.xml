@@ -3,7 +3,7 @@
     <apiVersion>65.0</apiVersion>
     <isExposed>true</isExposed>
     <masterLabel>Add to Calendar</masterLabel>
-    <description>Adds one event to Google Calendar, Outlook, Yahoo Calendar, Apple Calendar, or a downloaded calendar file. Pass the event details in. It does not read a Salesforce Event.</description>
+    <description>Adds one event to Google Calendar, Outlook, Yahoo Calendar, Apple Calendar, or a downloaded calendar file. Pass event details from any Salesforce record. Start and End come from Date/Time fields, or are written as UTC.</description>
     <targets>
         <target>lightning__AppPage</target>
         <target>lightning__RecordPage</target>
@@ -24,6 +24,7 @@
             <property name="eventUrl" label="URL" type="String" role="inputOnly" description="Meeting or other URL stored on the calendar event and added to the web calendar description." />
             <property name="eventUid" label="Event UID" type="String" role="inputOnly" description="Stable calendar id. Pass the Event UID from Send Email with Calendar Event so the downloaded file refers to the same event. A new id is created when blank." />
             <property name="buttonLabel" label="Button Label" type="String" role="inputOnly" default="Add to Calendar" />
+            <property name="buttonVariant" label="Button Style" type="String" role="inputOnly" default="neutral" description="Type one of: neutral, brand, brand-outline, destructive, destructive-text, success, inverse, base. Blank uses neutral." />
             <property name="showGoogle" label="Show Google Calendar" type="Boolean" role="inputOnly" default="true" />
             <property name="showOutlook" label="Show Outlook" type="Boolean" role="inputOnly" default="true" />
             <property name="showOutlookLive" label="Show Outlook.com" type="Boolean" role="inputOnly" default="true" />
@@ -38,18 +39,20 @@
             <property name="icsContent" label="Calendar File Text" type="String" role="outputOnly" />
             <property name="icsFileName" label="Calendar File Name" type="String" role="outputOnly" />
             <property name="error" label="Error" type="String" role="outputOnly" />
+            <property name="selectedCalendar" label="Selected Calendar" type="String" role="outputOnly" description="The menu item that was clicked: google, outlook, outlookLive, yahoo, apple, or ics. Blank when nothing was clicked." />
         </targetConfig>
         <targetConfig targets="lightning__AppPage,lightning__RecordPage,lightning__HomePage">
             <property name="eventTitle" label="Title" type="String" description="Calendar title. Blank uses Event." />
-            <property name="startDateTime" label="Start" type="String" description="Required. Event start as a date-time value, such as 2026-09-24T18:00:00.000Z." />
-            <property name="endDateTime" label="End" type="String" description="Event end. Blank means one hour after start. For an all-day event this is the last day." />
+            <property name="startDateTime" label="Start" type="String" description="Required. UTC date-time, such as 2026-09-29T17:00:00.000Z. App Builder has no date picker for this field. Experience Builder does." />
+            <property name="endDateTime" label="End" type="String" description="UTC date-time, same form as Start. Blank means one hour after start, or that day only when All Day is checked." />
             <property name="allDay" label="All Day" type="Boolean" description="When true, the event uses calendar dates instead of times." />
-            <property name="timeZone" label="Time Zone" type="String" description="Named time zone such as America/Los_Angeles. Blank uses UTC for all-day dates." />
+            <property name="timeZone" label="Time Zone" type="String" datasource="UTC,America/Los_Angeles,America/Denver,America/Phoenix,America/Chicago,America/New_York,America/Anchorage,Pacific/Honolulu,America/Toronto,America/Vancouver,America/Mexico_City,America/Sao_Paulo,Europe/London,Europe/Dublin,Europe/Paris,Europe/Berlin,Europe/Madrid,Europe/Rome,Europe/Amsterdam,Africa/Johannesburg,Asia/Dubai,Asia/Kolkata,Asia/Singapore,Asia/Hong_Kong,Asia/Shanghai,Asia/Tokyo,Asia/Seoul,Australia/Sydney,Australia/Melbourne,Pacific/Auckland" description="Used for all-day dates and Google Calendar. Leave blank to use UTC for all-day dates." />
             <property name="eventDescription" label="Description" type="String" />
             <property name="eventLocation" label="Location" type="String" />
             <property name="eventUrl" label="URL" type="String" />
             <property name="eventUid" label="Event UID" type="String" />
             <property name="buttonLabel" label="Button Label" type="String" default="Add to Calendar" />
+            <property name="buttonVariant" label="Button Style" type="String" datasource="neutral,brand,brand-outline,destructive,destructive-text,success,inverse,base" default="neutral" description="SLDS button style. Neutral is a plain button. Brand is the blue primary button." />
             <property name="showGoogle" label="Show Google Calendar" type="Boolean" default="true" />
             <property name="showOutlook" label="Show Outlook" type="Boolean" default="true" />
             <property name="showOutlookLive" label="Show Outlook.com" type="Boolean" default="true" />
@@ -60,15 +63,16 @@
         </targetConfig>
         <targetConfig targets="lightningCommunity__Default">
             <property name="eventTitle" label="Title" type="String" />
-            <property name="startDateTime" label="Start" type="String" />
-            <property name="endDateTime" label="End" type="String" />
+            <property name="startDateTime" label="Start" type="String" editor="three_levers/dateTimePropertyEditor" description="Required. Pick the date and time in your time. The page stores it in UTC." />
+            <property name="endDateTime" label="End" type="String" editor="three_levers/dateTimePropertyEditor" description="Pick the end. Leave blank for one hour after start, or that day only when All Day is checked." />
             <property name="allDay" label="All Day" type="Boolean" />
-            <property name="timeZone" label="Time Zone" type="String" />
+            <property name="timeZone" label="Time Zone" type="String" datasource="UTC,America/Los_Angeles,America/Denver,America/Phoenix,America/Chicago,America/New_York,America/Anchorage,Pacific/Honolulu,America/Toronto,America/Vancouver,America/Mexico_City,America/Sao_Paulo,Europe/London,Europe/Dublin,Europe/Paris,Europe/Berlin,Europe/Madrid,Europe/Rome,Europe/Amsterdam,Africa/Johannesburg,Asia/Dubai,Asia/Kolkata,Asia/Singapore,Asia/Hong_Kong,Asia/Shanghai,Asia/Tokyo,Asia/Seoul,Australia/Sydney,Australia/Melbourne,Pacific/Auckland" description="Used for all-day dates and Google Calendar. Leave blank to use UTC for all-day dates." />
             <property name="eventDescription" label="Description" type="String" />
             <property name="eventLocation" label="Location" type="String" />
             <property name="eventUrl" label="URL" type="String" />
             <property name="eventUid" label="Event UID" type="String" />
             <property name="buttonLabel" label="Button Label" type="String" default="Add to Calendar" />
+            <property name="buttonVariant" label="Button Style" type="String" datasource="neutral,brand,brand-outline,destructive,destructive-text,success,inverse,base" default="neutral" description="SLDS button style. Neutral is a plain button. Brand is the blue primary button." />
             <property name="showGoogle" label="Show Google Calendar" type="Boolean" default="true" />
             <property name="showOutlook" label="Show Outlook" type="Boolean" default="true" />
             <property name="showOutlookLive" label="Show Outlook.com" type="Boolean" default="true" />

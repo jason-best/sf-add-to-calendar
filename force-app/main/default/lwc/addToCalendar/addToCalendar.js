@@ -3,6 +3,24 @@ import { buildCalendarLinks, createEventUid } from "./calendarLinks";
 
 const DEBUG_PREFIX = "[addToCalendar]";
 
+const BUTTON_VARIANTS = new Set([
+  "base",
+  "neutral",
+  "brand",
+  "brand-outline",
+  "destructive",
+  "destructive-text",
+  "inverse",
+  "success"
+]);
+
+const BUTTON_VARIANT_ALIASES = {
+  "outline brand": "brand-outline",
+  "outline-brand": "brand-outline",
+  "text destructive": "destructive-text",
+  "text-destructive": "destructive-text"
+};
+
 export default class AddToCalendar extends LightningElement {
   @api eventTitle;
   @api eventDescription;
@@ -14,6 +32,8 @@ export default class AddToCalendar extends LightningElement {
   @api timeZone;
   @api eventUid;
   @api buttonLabel;
+  /** SLDS button style. Blank uses neutral. */
+  @api buttonVariant;
 
   @api showGoogle;
   @api showOutlook;
@@ -32,11 +52,23 @@ export default class AddToCalendar extends LightningElement {
   @api icsContent = "";
   @api icsFileName = "";
   @api error = "";
+  /** Last menu item clicked: google, outlook, outlookLive, yahoo, apple, or ics. Blank if none. */
+  @api selectedCalendar = "";
 
   _generatedUid;
   _builtAt;
   _lastLogKey = "";
   downloadMessage = "";
+  menuOpen = false;
+
+  closeMenu = () => {
+    this.menuOpen = false;
+    document.removeEventListener("click", this.closeMenu);
+  };
+
+  disconnectedCallback() {
+    document.removeEventListener("click", this.closeMenu);
+  }
 
   connectedCallback() {
     if (!this._builtAt) {
@@ -114,6 +146,17 @@ export default class AddToCalendar extends LightningElement {
     return isBlank(this.buttonLabel) ? "Add to Calendar" : this.buttonLabel;
   }
 
+  get resolvedButtonVariant() {
+    const raw = asText(this.buttonVariant).trim().toLowerCase();
+    const value = BUTTON_VARIANT_ALIASES[raw] || raw;
+    return BUTTON_VARIANTS.has(value) ? value : "neutral";
+  }
+
+  get menuTriggerClass() {
+    const open = this.menuOpen ? " slds-is-open" : "";
+    return "menu slds-dropdown-trigger slds-dropdown-trigger_click" + open;
+  }
+
   get isDisabled() {
     return Boolean(this.built.error) || this.menuItems.length === 0;
   }
@@ -142,13 +185,41 @@ export default class AddToCalendar extends LightningElement {
     }
   }
 
-  handleSelect(event) {
+  toggleMenu(event) {
+    event.stopPropagation();
+    if (this.isDisabled) {
+      return;
+    }
+    this.menuOpen = !this.menuOpen;
+    if (this.menuOpen) {
+      window.setTimeout(() => document.addEventListener("click", this.closeMenu), 0);
+    } else {
+      document.removeEventListener("click", this.closeMenu);
+    }
+  }
+
+  handleMenuClick(event) {
+    event.preventDefault();
+    event.stopPropagation();
+    const choice = event.currentTarget.dataset.value;
+    this.closeMenu();
+    this.handleSelect(choice);
+  }
+
+  handleSelect(choice) {
     const built = this.built;
-    const choice = event.detail.value;
     this.debugLog("menu selected", { choice, error: built.error });
     if (built.error) {
       return;
     }
+    this.selectedCalendar = choice;
+    this.dispatchEvent(
+      new CustomEvent("calendarselect", {
+        bubbles: true,
+        composed: true,
+        detail: { calendar: choice }
+      })
+    );
     if (choice === "ics" || choice === "apple") {
       try {
         this.downloadIcs(built.icsContent, built.icsFileName);
@@ -235,7 +306,7 @@ export default class AddToCalendar extends LightningElement {
     if (built.error) {
       console.error(DEBUG_PREFIX, built.error, {
         inputs: snapshot,
-        hint: "Start is required. Pass Title, Start, End, All Day, Time Zone, Description, Location, and URL. This component does not read a Salesforce Event."
+        hint: "Start is required. Pass event details from any Salesforce record. Start and End come from Date/Time fields, or are written as UTC."
       });
       return;
     }

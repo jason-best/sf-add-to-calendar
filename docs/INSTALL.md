@@ -2,18 +2,18 @@
 
 ## Option A — Install unlocked package (recommended)
 
-**Version:** `0.1.0-2` (released)  
-**Subscriber package version Id:** `04tgL000000W2rVQAS`
+**Version:** `0.1.1-1` (released)  
+**Subscriber package version Id:** `04tgL000000W4A9QAK`
 
 | Org type | Install URL |
 |----------|-------------|
-| Production | https://login.salesforce.com/packaging/installPackage.apexp?p0=04tgL000000W2rVQAS |
-| Sandbox | https://test.salesforce.com/packaging/installPackage.apexp?p0=04tgL000000W2rVQAS |
+| Production | https://login.salesforce.com/packaging/installPackage.apexp?p0=04tgL000000W4A9QAK |
+| Sandbox | https://test.salesforce.com/packaging/installPackage.apexp?p0=04tgL000000W4A9QAK |
 
 CLI:
 
 ```bash
-sf package install --package 04tgL000000W2rVQAS --target-org <alias>
+sf package install --package 04tgL000000W4A9QAK --target-org <alias>
 ```
 
 No installation key. After install, use **`three_levers__addToCalendar`** in Flow Builder and in Lightning App Builder.

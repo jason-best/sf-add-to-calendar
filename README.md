@@ -9,13 +9,34 @@ Flow screen and Lightning page button that adds one event to **Google Calendar**
 
 ## Features
 
-- Screen Flow and Lightning page button menu
+Pass event details from any Salesforce record. Start and End pull from Date/Time fields, or are written as UTC.
+
 - Google Calendar, Outlook (Microsoft 365), Outlook.com, and Yahoo Calendar open a prefilled event
 - Apple Calendar and Download calendar file save `event.ics`
-- Pass every value in. The component does not read a Salesforce record
 - Timed events are written in UTC. All-day events use a calendar date in the named time zone
-- Flow outputs the calendar URLs, the calendar file text, the file name, and an error message
 - **Unlocked 2GP package** — install in any org
+
+### Screen Flow
+
+- Map Start and End from Date/Time fields, formulas, or variables on any record
+- Type any time zone, such as `America/Los_Angeles`
+- Type the button style: `neutral`, `brand`, `brand-outline`, `destructive`, `destructive-text`, `success`, `inverse`, or `base`
+- Outputs after Next or Finish: calendar URLs, calendar file text, file name, error, and which calendar was clicked (`google`, `outlook`, `outlookLive`, `yahoo`, `apple`, or `ics`)
+
+### Lightning pages
+
+App pages, record pages, and home pages.
+
+- Write Start and End as UTC, such as `2026-09-29T17:00:00.000Z`
+- Time Zone is a dropdown of common zones
+- Button style is a dropdown of the same names used in Flow
+- The values belong to the page. Place a Screen Flow on the page when each record should pass its own Date/Time fields
+
+### Experience Cloud
+
+- Start and End are date and time pickers. The page stores them as UTC
+- Time Zone and button style use the same dropdowns as a Lightning page
+- Publish the site after you save. Place a Screen Flow on the page when each visitor or record should pass its own Date/Time fields
 
 ---
 
@@ -26,21 +47,21 @@ Flow screen and Lightning page button that adds one event to **Google Calendar**
 3. Set **Start**. Title, end, location, and the other inputs are optional.
 4. Run the flow and choose a calendar from the button.
 
-See [Flow and page configuration](docs/FLOW.md) for every input and output.
+See [Flow configuration](docs/FLOW.md) for Flow inputs and outputs. See [Record pages and Experience Cloud](docs/PAGES.md) for each property you type on those pages.
 
 ---
 
 ## Install package
 
-**Version `0.1.0-2` (released)** · Subscriber version Id `04tgL000000W2rVQAS`
+**Version `0.1.1-1` (released)** · Subscriber version Id `04tgL000000W4A9QAK`
 
 | Org | URL |
 |-----|-----|
-| Production | https://login.salesforce.com/packaging/installPackage.apexp?p0=04tgL000000W2rVQAS |
-| Sandbox | https://test.salesforce.com/packaging/installPackage.apexp?p0=04tgL000000W2rVQAS |
+| Production | https://login.salesforce.com/packaging/installPackage.apexp?p0=04tgL000000W4A9QAK |
+| Sandbox | https://test.salesforce.com/packaging/installPackage.apexp?p0=04tgL000000W4A9QAK |
 
 ```bash
-sf package install --package 04tgL000000W2rVQAS --target-org <alias>
+sf package install --package 04tgL000000W4A9QAK --target-org <alias>
 ```
 
 After install, the component in Flow and on Lightning pages is **`three_levers__addToCalendar`**.

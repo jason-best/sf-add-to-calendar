@@ -1,19 +1,33 @@
 <template>
   <div class="slds-form-element">
-    <lightning-button-menu
-      label={resolvedButtonLabel}
-      alternative-text={resolvedButtonLabel}
-      disabled={isDisabled}
-      onselect={handleSelect}
-    >
-      <template for:each={menuItems} for:item="item">
-        <lightning-menu-item
-          key={item.value}
-          value={item.value}
-          label={item.label}
-        ></lightning-menu-item>
-      </template>
-    </lightning-button-menu>
+    <div class={menuTriggerClass}>
+      <lightning-button
+        label={resolvedButtonLabel}
+        variant={resolvedButtonVariant}
+        icon-name="utility:down"
+        icon-position="right"
+        disabled={isDisabled}
+        onclick={toggleMenu}
+        aria-haspopup="true"
+        aria-expanded={menuOpen}
+      ></lightning-button>
+      <div class="slds-dropdown slds-dropdown_left">
+        <ul class="slds-dropdown__list" role="menu">
+          <template for:each={menuItems} for:item="item">
+            <li key={item.value} class="slds-dropdown__item" role="presentation">
+              <a
+                href="#"
+                role="menuitem"
+                data-value={item.value}
+                onclick={handleMenuClick}
+              >
+                <span class="slds-truncate" title={item.label}>{item.label}</span>
+              </a>
+            </li>
+          </template>
+        </ul>
+      </div>
+    </div>
     <template if:true={statusMessage}>
       <div class="slds-text-color_error slds-m-top_x-small">
         {statusMessage}

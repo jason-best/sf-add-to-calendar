@@ -1,0 +1,9 @@
+.menu {
+  display: inline-block;
+  position: relative;
+}
+
+.menu .slds-dropdown {
+  min-width: 12rem;
+  z-index: 9001;
+}

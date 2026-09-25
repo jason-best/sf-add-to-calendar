@@ -1,6 +1,6 @@
 # Flow and page configuration
 
-Add **Add to Calendar** to a Screen Flow screen, or to a Lightning app, record, or home page. Pass each value in. The component does not read a Salesforce Event or any other record.
+Pass event details from any Salesforce record. On a Screen Flow, Start and End pull from Date/Time fields, formulas, or variables. On a Lightning page, write Start and End as UTC. In Experience Cloud, pick Start and End and the page stores them as UTC.
 
 ## Component names
 
@@ -10,7 +10,7 @@ Add **Add to Calendar** to a Screen Flow screen, or to a Lightning app, record, 
 | Deploy from source (namespaced scratch) | `addToCalendar` |
 | Unpackaged (`c:` namespace) | `c:addToCalendar` |
 
-Experience Cloud page templates (`lightningCommunity__Page`) can include the component, and that target does not accept design properties. Pass the values from a Flow screen instead. Default community pages (`lightningCommunity__Default`) accept the same properties as Lightning pages.
+On a record page or in Experience Cloud, type each value in the property panel. That guide is [PAGES.md](PAGES.md).
 
 ## Menu
 
@@ -39,6 +39,7 @@ Experience Cloud page templates (`lightningCommunity__Page`) can include the com
 | URL | No | Omitted. When set, stored on the calendar file and appended to the web calendar description. |
 | Event UID | No | A new id is created in the browser. Pass the Event UID from **Send Email with Calendar Event** when this file should refer to that emailed event. |
 | Button Label | No | `Add to Calendar`. |
+| Button Style | No | `neutral`. In Flow, type `neutral`, `brand`, `brand-outline`, `destructive`, `destructive-text`, `success`, `inverse`, or `base`. On a Lightning page the same values are a dropdown. |
 | Show Google / Outlook / Outlook.com / Yahoo / Apple / Calendar File | No | Shown. Set one to false to hide that menu item. |
 | Debug | No | False. Errors are still written to the browser console under `[addToCalendar]`. |
 
@@ -56,3 +57,10 @@ Store automatically on the screen element, or assign to Flow variables.
 | Calendar File Text | `.ics` contents (`METHOD:PUBLISH`). |
 | Calendar File Name | `event.ics` |
 | Error | Blank when the event is valid. |
+| Selected Calendar | `google`, `outlook`, `outlookLive`, `yahoo`, `apple`, or `ics`. Blank when nothing was clicked. |
+
+The click does not move the flow forward. **Selected Calendar** is available after Next or Finish. A later click replaces the earlier one. Use it in a Decision, or save it to a field.
+
+## Record pages and Experience Cloud
+
+How to set every property on a record page, app page, home page, or Experience Cloud page is in [PAGES.md](PAGES.md). Experience Builder uses date and time pickers for Start and End. Lightning pages use UTC text for those two fields. Time Zone is a dropdown in both. The panel does not map record fields.

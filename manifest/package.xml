@@ -2,6 +2,7 @@
 <Package xmlns="http://soap.sforce.com/2006/04/metadata">
     <types>
         <members>addToCalendar</members>
+        <members>dateTimePropertyEditor</members>
         <name>LightningComponentBundle</name>
     </types>
     <version>65.0</version>

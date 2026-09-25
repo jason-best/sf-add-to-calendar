@@ -51,6 +51,18 @@ See [Flow configuration](docs/FLOW.md) for Flow inputs and outputs. See [Record 
 
 ---
 
+## Public flows and Lightning Flow iframe
+
+Add to Calendar works on a Screen Flow that people can run without logging into Salesforce. Put the button on that flow, then expose the flow on your website with [Lightning Flow iframe](https://github.com/jason-best/lightning-flow-iframe).
+
+1. Build a Screen Flow and add **Add to Calendar** to a screen. Map Start, End, and the other inputs from flow variables.
+2. Install **FlowIframeEmbed** and put the `FlowIframeEmbed` Visualforce page on a Salesforce Site. Give the site guest user access to run the flow.
+3. On the external page, embed that site URL with `three-levers-flow-embed.js` and pass the flow's API name.
+
+The parent page can pass text into the flow through URL parameters. Those values arrive as text, so convert them in the flow when Start or End should be Date/Time. Product setup is in the [Lightning Flow iframe guide](https://threelevers.com/support/products/lightning-flow-iframe/).
+
+---
+
 ## Install package
 
 **Version `0.1.1-1` (released)** · Subscriber version Id `04tgL000000W4A9QAK`
@@ -94,6 +106,16 @@ Packaging and 2GP releases are maintained in the private [ThreeLeversDevOrg](htt
 
 ---
 
-## Support
+## Need more features or help with setup
 
-Questions or consulting: [threelevers.com/contact](https://threelevers.com/contact/)
+The package covers one event, the calendar menu, and the inputs in [Flow configuration](docs/FLOW.md) and [Record pages and Experience Cloud](docs/PAGES.md). Three Levers can build the surrounding flow and page work, or extend the button for a specific org.
+
+Examples:
+
+- **Record-based event details in Experience Cloud.** A Screen Flow on the site record page maps Start and End from that record's Date/Time fields, and maps title, location, and URL from the record's text fields. Each record then shows its own event. The same pattern works on a Lightning record page.
+- **Configuring the flows.** Map the inputs, choose a button style, set all-day versus a timed event, and use **Selected Calendar** after Next or Finish when a later step depends on which calendar was clicked.
+
+For that work, contact Jason Best at Three Levers:
+
+- [threelevers.com/contact](https://threelevers.com/contact/)
+- jason@threelevers.com

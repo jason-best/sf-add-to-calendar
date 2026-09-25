@@ -1,0 +1,24 @@
+<template>
+  <div class="slds-form-element">
+    <lightning-button-menu
+      label={resolvedButtonLabel}
+      alternative-text={resolvedButtonLabel}
+      disabled={isDisabled}
+      onselect={handleSelect}
+    >
+      <template for:each={menuItems} for:item="item">
+        <lightning-menu-item
+          key={item.value}
+          value={item.value}
+          label={item.label}
+        ></lightning-menu-item>
+      </template>
+    </lightning-button-menu>
+    <template if:true={statusMessage}>
+      <div class="slds-text-color_error slds-m-top_x-small">
+        {statusMessage}
+      </div>
+    </template>
+    <a data-id="ics-download" class="slds-assistive-text"></a>
+  </div>
+</template>

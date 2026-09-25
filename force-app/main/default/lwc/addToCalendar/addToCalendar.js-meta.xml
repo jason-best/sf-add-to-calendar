@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LightningComponentBundle xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>65.0</apiVersion>
+    <isExposed>true</isExposed>
+    <masterLabel>Add to Calendar</masterLabel>
+    <description>Adds one event to Google Calendar, Outlook, Yahoo Calendar, Apple Calendar, or a downloaded calendar file. Pass the event details in. It does not read a Salesforce Event.</description>
+    <targets>
+        <target>lightning__AppPage</target>
+        <target>lightning__RecordPage</target>
+        <target>lightning__HomePage</target>
+        <target>lightning__FlowScreen</target>
+        <target>lightningCommunity__Page</target>
+        <target>lightningCommunity__Default</target>
+    </targets>
+    <targetConfigs>
+        <targetConfig targets="lightning__FlowScreen">
+            <property name="eventTitle" label="Title" type="String" role="inputOnly" description="Calendar title. Blank uses Event." />
+            <property name="startDateTime" label="Start" type="DateTime" role="inputOnly" description="Required. Event start. The button stays disabled when this is blank." />
+            <property name="endDateTime" label="End" type="DateTime" role="inputOnly" description="Event end. Blank means one hour after start. For an all-day event this is the last day, and a blank end means that day only." />
+            <property name="allDay" label="All Day" type="Boolean" role="inputOnly" description="When true, the event uses calendar dates instead of times." />
+            <property name="timeZone" label="Time Zone" type="String" role="inputOnly" description="Named time zone such as America/Los_Angeles. Used for all-day dates and Google Calendar. Timed events are written in UTC." />
+            <property name="eventDescription" label="Description" type="String" role="inputOnly" />
+            <property name="eventLocation" label="Location" type="String" role="inputOnly" />
+            <property name="eventUrl" label="URL" type="String" role="inputOnly" description="Meeting or other URL stored on the calendar event and added to the web calendar description." />
+            <property name="eventUid" label="Event UID" type="String" role="inputOnly" description="Stable calendar id. Pass the Event UID from Send Email with Calendar Event so the downloaded file refers to the same event. A new id is created when blank." />
+            <property name="buttonLabel" label="Button Label" type="String" role="inputOnly" default="Add to Calendar" />
+            <property name="showGoogle" label="Show Google Calendar" type="Boolean" role="inputOnly" default="true" />
+            <property name="showOutlook" label="Show Outlook" type="Boolean" role="inputOnly" default="true" />
+            <property name="showOutlookLive" label="Show Outlook.com" type="Boolean" role="inputOnly" default="true" />
+            <property name="showYahoo" label="Show Yahoo Calendar" type="Boolean" role="inputOnly" default="true" />
+            <property name="showApple" label="Show Apple Calendar" type="Boolean" role="inputOnly" default="true" description="Opens the calendar file. Calendar on a Mac or iPhone offers to add the event." />
+            <property name="showIcs" label="Show Calendar File Download" type="Boolean" role="inputOnly" default="true" />
+            <property name="debug" label="Debug" type="Boolean" role="inputOnly" default="false" description="When true, writes the inputs and calendar result to the browser console. Errors are logged even when this is false." />
+            <property name="googleCalendarUrl" label="Google Calendar URL" type="String" role="outputOnly" />
+            <property name="outlookCalendarUrl" label="Outlook URL" type="String" role="outputOnly" />
+            <property name="outlookLiveCalendarUrl" label="Outlook.com URL" type="String" role="outputOnly" />
+            <property name="yahooCalendarUrl" label="Yahoo Calendar URL" type="String" role="outputOnly" />
+            <property name="icsContent" label="Calendar File Text" type="String" role="outputOnly" />
+            <property name="icsFileName" label="Calendar File Name" type="String" role="outputOnly" />
+            <property name="error" label="Error" type="String" role="outputOnly" />
+        </targetConfig>
+        <targetConfig targets="lightning__AppPage,lightning__RecordPage,lightning__HomePage">
+            <property name="eventTitle" label="Title" type="String" description="Calendar title. Blank uses Event." />
+            <property name="startDateTime" label="Start" type="String" description="Required. Event start as a date-time value, such as 2026-09-24T18:00:00.000Z." />
+            <property name="endDateTime" label="End" type="String" description="Event end. Blank means one hour after start. For an all-day event this is the last day." />
+            <property name="allDay" label="All Day" type="Boolean" description="When true, the event uses calendar dates instead of times." />
+            <property name="timeZone" label="Time Zone" type="String" description="Named time zone such as America/Los_Angeles. Blank uses UTC for all-day dates." />
+            <property name="eventDescription" label="Description" type="String" />
+            <property name="eventLocation" label="Location" type="String" />
+            <property name="eventUrl" label="URL" type="String" />
+            <property name="eventUid" label="Event UID" type="String" />
+            <property name="buttonLabel" label="Button Label" type="String" default="Add to Calendar" />
+            <property name="showGoogle" label="Show Google Calendar" type="Boolean" default="true" />
+            <property name="showOutlook" label="Show Outlook" type="Boolean" default="true" />
+            <property name="showOutlookLive" label="Show Outlook.com" type="Boolean" default="true" />
+            <property name="showYahoo" label="Show Yahoo Calendar" type="Boolean" default="true" />
+            <property name="showApple" label="Show Apple Calendar" type="Boolean" default="true" />
+            <property name="showIcs" label="Show Calendar File Download" type="Boolean" default="true" />
+            <property name="debug" label="Debug" type="Boolean" default="false" description="When true, writes the inputs and calendar result to the browser console." />
+        </targetConfig>
+        <targetConfig targets="lightningCommunity__Default">
+            <property name="eventTitle" label="Title" type="String" />
+            <property name="startDateTime" label="Start" type="String" />
+            <property name="endDateTime" label="End" type="String" />
+            <property name="allDay" label="All Day" type="Boolean" />
+            <property name="timeZone" label="Time Zone" type="String" />
+            <property name="eventDescription" label="Description" type="String" />
+            <property name="eventLocation" label="Location" type="String" />
+            <property name="eventUrl" label="URL" type="String" />
+            <property name="eventUid" label="Event UID" type="String" />
+            <property name="buttonLabel" label="Button Label" type="String" default="Add to Calendar" />
+            <property name="showGoogle" label="Show Google Calendar" type="Boolean" default="true" />
+            <property name="showOutlook" label="Show Outlook" type="Boolean" default="true" />
+            <property name="showOutlookLive" label="Show Outlook.com" type="Boolean" default="true" />
+            <property name="showYahoo" label="Show Yahoo Calendar" type="Boolean" default="true" />
+            <property name="showApple" label="Show Apple Calendar" type="Boolean" default="true" />
+            <property name="showIcs" label="Show Calendar File Download" type="Boolean" default="true" />
+            <property name="debug" label="Debug" type="Boolean" default="false" />
+        </targetConfig>
+    </targetConfigs>
+</LightningComponentBundle>

@@ -1,6 +1,6 @@
 # Add to Calendar
 
-Salesforce Flow screen and Lightning page button that adds one event to **Google Calendar**, **Outlook**, **Outlook.com**, **Yahoo Calendar**, or **Apple Calendar**, or downloads an ICS calendar file (`.ics`).
+Add to Calendar for Salesforce. A Flow screen and Lightning page button that adds one event to **Google Calendar**, **Outlook**, **Outlook.com**, **Yahoo Calendar**, or **Apple Calendar**, or downloads an ICS calendar file (`.ics`).
 
 [![License](https://img.shields.io/badge/License-BSD_3--Clause-blue.svg)](LICENSE)
 [![Salesforce API](https://img.shields.io/badge/Salesforce_API-65.0-00A1E0)](https://developer.salesforce.com)

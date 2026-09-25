@@ -1,6 +1,6 @@
 # Add to Calendar
 
-Flow screen and Lightning page button that adds one event to **Google Calendar**, **Outlook**, **Outlook.com**, **Yahoo Calendar**, or **Apple Calendar**, or downloads a calendar file.
+Salesforce Flow screen and Lightning page button that adds one event to **Google Calendar**, **Outlook**, **Outlook.com**, **Yahoo Calendar**, or **Apple Calendar**, or downloads an ICS calendar file (`.ics`).
 
 [![License](https://img.shields.io/badge/License-BSD_3--Clause-blue.svg)](LICENSE)
 [![Salesforce API](https://img.shields.io/badge/Salesforce_API-65.0-00A1E0)](https://developer.salesforce.com)
@@ -48,6 +48,18 @@ App pages, record pages, and home pages.
 4. Run the flow and choose a calendar from the button.
 
 See [Flow configuration](docs/FLOW.md) for Flow inputs and outputs. See [Record pages and Experience Cloud](docs/PAGES.md) for each property you type on those pages.
+
+---
+
+## ICS calendar file
+
+**Download calendar file** and **Apple Calendar** both save `event.ics`. That file is an iCalendar document (`BEGIN:VCALENDAR`, one `VEVENT`, `METHOD:PUBLISH`). Calendar on a Mac or iPhone, Outlook, and Google Calendar can open it and add the event.
+
+The file is a download in the browser. This component does not email it. To attach the same kind of ICS file to an email from Flow, use [Send Email with Calendar Event](https://github.com/jason-best/sf-send-email-with-calendar-event).
+
+In a Screen Flow, **Calendar File Text** is the ICS body and **Calendar File Name** is `event.ics`. **Selected Calendar** is `ics` when the visitor chooses Download calendar file, and `apple` when they choose Apple Calendar.
+
+Timed events are UTC instants (`DTSTART` / `DTEND`). All-day events are calendar dates (`VALUE=DATE`) in the time zone you set. A blank end is one hour after start, or that day only when the event is all-day.
 
 ---
 

@@ -101,17 +101,6 @@ After install, the component in Flow and on Lightning pages is **`three_levers__
 
 ---
 
-## Development
-
-```bash
-sf org create scratch --definition-file config/project-scratch-def.json --alias add-to-calendar-scratch --set-default
-sf project deploy start --manifest manifest/package.xml --target-org add-to-calendar-scratch
-```
-
-Packaging and 2GP releases are maintained in the private [ThreeLeversDevOrg](https://github.com/jason-best/ThreeLeversDevOrg) monorepo. Source and docs: [jason-best/sf-add-to-calendar](https://github.com/jason-best/sf-add-to-calendar). See [docs/PACKAGING.md](docs/PACKAGING.md).
-
----
-
 ## License
 
 [BSD 3-Clause](LICENSE) · Copyright Three Levers
